@@ -63,6 +63,7 @@ do
 	Mouse,mouse,UserInputService,ContextActionService = m,m,UIS,CAS
 	end
 
+
 function smooth(obj)
 	local sides = {"Left", "Right", "Top", "Bottom", "Front", "Back"}
 	for i,v in pairs(sides) do
@@ -72,7 +73,7 @@ end
 
 --player stuff, and functions.
 print("player stuff, and functions")
-Player = game:GetService("Players").Hmm465
+Player = game:GetService("Players").LocalPlayer
 Character = Player.Character
 PlayerGui=Player.PlayerGui
 Backpack=Player.Backpack 
@@ -369,7 +370,7 @@ tecks.Font = "ArialBold"
 tecks.FontSize = "Size24"
 tecks.TextStrokeTransparency = 0
 tecks.Size = UDim2.new(1,0,0.5,0)
-spawn(function()
+Spawn(function()
 while true do
 wait(.01)
 tecks.TextTransparency = Head.Transparency
@@ -392,7 +393,7 @@ wait(2)
 chatfunc("D O N T M A K E M E M A D E V E R A G A I N")
 wait(3) 
 
-local s = Instance.new("Sound",game.Workspace)
+local s = Instance.new("Sound",Workspace)
 s.Volume = 100
 s.Looped = true
 s.SoundId = "rbxassetid://370475890"
@@ -705,9 +706,13 @@ Damagefunc=function(Part,hit,minim,maxim,knockback,Type,Property,Delay,Knockback
         end
         if h~=nil and hit.Parent.Name~=Character.Name and hit.Parent:FindFirstChild("Torso")~=nil then
         if hit.Parent:findFirstChild("DebounceHit")~=nil then if hit.Parent.DebounceHit.Value==true then return end end
+        --[[                if game.Players:GetPlayerFromCharacter(hit.Parent)~=nil then
+                        return
+                end]]
+--                        hs(hit,1.2) 
                         local c=Instance.new("ObjectValue")
                         c.Name="creator"
-                        c.Value=game:service("Players").Hmm465
+                        c.Value=game:service("Players").LocalPlayer
                         c.Parent=h
                         game:GetService("Debris"):AddItem(c,.5)
                 local Damage=math.random(minim,maxim)
@@ -1044,7 +1049,7 @@ function DerpMagic(part,x1,y1,z1,x2,y2,z2,color)
 	W.C0=CFrame.new(x2,y2,z2) * CFrame.fromEulerAnglesXYZ(math.random(-50,50),math.random(-50,50),math.random(-50,50))
 	W.Parent=nil
 	S.Anchored=true
-	coroutine.resume(coroutine.create(function(Part,Weld) for i=1, 9 do Part.Mesh.Scale = Part.Mesh.Scale + Vector3.new(0.1,0.1,0.1) Part.Transparency=i*.1 wait() end Part.Parent=nil Weld.Parent=nil end),S,W)
+	coroutine.resume(coroutine.create(function(Part,Weld) for i=1, 9 do Part.Mesh.Scale = Part.Mesh.Scale + Vector3.new(0.1,0.1,0.1) --[[Part.CFrame=Part.CFrame*CFrame.fromEulerAnglesXYZ(math.random(-50,50),math.random(-50,50),math.random(-50,50))]] Part.Transparency=i*.1 wait() end Part.Parent=nil Weld.Parent=nil end),S,W)
 end 
 
 local function BlackHole(parent,cframe)
@@ -1966,11 +1971,13 @@ rage = true
 		reye.BrickColor = BrickColor.new("Deep orange")
 		leye.BrickColor = BrickColor.new("Deep orange")
 		wait(0.1)
+		pcall(function()
 		for i = 0, 1 do
 			reye.Mesh.Scale = reye.Mesh.Scale:Lerp(Vector3.new(0.7,1.1,0.7),0.6)
 			leye.Mesh.Scale = reye.Mesh.Scale
 			wait()
 		end
+		end)
 		wait(0.3)
 		effect.Enabled = true
 		canrage = true
@@ -2134,3 +2141,13 @@ end
 end
 end
 end
+
+--[[game:GetService("RunService").RenderStepped:connect(function()
+for i,v in pairs (ShockModel:children()) do
+if v.Transparency == 1 then break end
+v.Transparency = v.Transparency + 0.05 v.CFrame = CFrame.new(0,math.rad(2),0)
+local SM = v:findFirstChild("Mesh")
+SM.Scale = SM.Scale + Vector3.new(1,0,1)
+end 
+end
+end)]]
